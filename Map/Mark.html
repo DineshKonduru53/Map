@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html> 
+<head> 
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8" /> 
+  <title>Google Maps Multiple Markers</title> 
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBTEHLPJeJk2ks0_XeBWnqdwKNOPgj38tM"></script>
+</head> 
+<body>
+  <div id="map" style="width: 500px; height: 400px;"></div>
+
+  <script type="text/javascript">
+    var locations = [
+   
+      ['Mumbai', 19.0760, 72.8777, 5],
+      ['Cochin', 9.9312, 76.2673, 3],
+      ['Hyderabad', 17.3850, 78.4867, 2],
+      ['Mysore', 12.2958, 76.6394, 1],
+      ['chennai',13.0827,80.2707,6],
+      ['stvd',13.4323,79.9612,7]
+    ];
+
+    var map = new google.maps.Map(document.getElementById('map'), {
+      zoom: 5,
+      center: new google.maps.LatLng(13.0827,80.2707),
+      mapTypeId: google.maps.MapTypeId.ROADMAP
+    });
+    
+    
+    var infowindow = new google.maps.InfoWindow();
+
+    var marker, i;
+
+    for (i = 0; i < locations.length; i++) {  
+        marker = new google.maps.Marker({
+          position: new google.maps.LatLng(locations[i][1], locations[i][2]),
+          map: map
+          
+        });
+
+        google.maps.event.addListener(marker, 'click', (function(marker, i) {
+          return function() {
+            infowindow.setContent(locations[i][0]);
+            infowindow.open(map, marker);
+          }
+        })(marker, i));
+      }
+    </script>
+  </body>
+  </html>
